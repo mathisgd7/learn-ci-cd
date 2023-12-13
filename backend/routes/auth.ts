@@ -6,6 +6,11 @@ import { TypedRouter } from './helpers/typed-router'
 
 const prisma = usePrisma()
 
+export function isValidPassword(password: string) {
+    // Contains at least 8 characters and a number
+    return password.length >= 8 && password.match(/[0-9]/) !== null
+}
+
 const typedRouter = new TypedRouter()
     .route(
         new (class AuthRegisterRoute implements TypedRouteInterface {
@@ -25,6 +30,7 @@ const typedRouter = new TypedRouter()
                     if (typeof username !== 'string') throw new Error('')
                     if (typeof email !== 'string') throw new Error('')
                     if (typeof password !== 'string') throw new Error('')
+                    if (!isValidPassword(password)) { return error(400, 'Invalid password') }
 
                     // Vérifier si l'utilisateur existe déjà
                     const userWithSameEmail = await prisma.user.findFirst({ where: { email } })
