@@ -15,6 +15,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: "Npm install"
+          command: 'npm install'
+      - run:
           name: "Backend lint"
           command: "npm run lint-check"
           working_directory: "backend/"
