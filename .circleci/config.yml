@@ -5,7 +5,7 @@ version: 2.1
 # Define a job to be invoked later in a workflow.
 # See: https://circleci.com/docs/configuration-reference/#jobs
 jobs:
-  backend-lint:
+  backend-type-check:
     # Specify the execution environment. You can specify an image from Docker Hub or use one of our convenience images from CircleCI's Developer Hub.
     # See: https://circleci.com/docs/configuration-reference/#executor-job
     docker:
@@ -19,7 +19,9 @@ jobs:
           command: "npm install"
       - run:
           name: "Backend lint"
-          command: "npm run lint-check"
+          command: |
+            npm run db-install
+            npm run type-check
           working_directory: "backend/"
           
   backend-unit-test:
@@ -48,5 +50,6 @@ jobs:
 workflows:
   backend-ci-workflow:
     jobs:
-      - backend-lint
+      - backend-type-check
       - backend-unit-test
+
