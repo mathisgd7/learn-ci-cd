@@ -16,7 +16,7 @@ jobs:
       - checkout
       - run:
           name: "Npm install"
-          command: 'npm install'
+          command: "npm install"
       - run:
           name: "Backend lint"
           command: "npm run lint-check"
