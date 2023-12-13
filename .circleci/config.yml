@@ -19,7 +19,9 @@ jobs:
           command: "npm install"
       - run:
           name: "Backend lint"
-          command: "npm run lint-check"
+          command: |
+            npm run db-install
+            npm run type-check
           working_directory: "backend/"
 
 # Orchestrate jobs using workflows
@@ -28,3 +30,4 @@ workflows:
   backend-ci-workflow:
     jobs:
       - backend-lint
+      - backend-type-check
